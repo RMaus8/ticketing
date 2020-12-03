@@ -1,5 +1,5 @@
 import { Password } from './../services/password';
-import mongoose from 'mongoose';
+import mongoose, { NativeError } from 'mongoose';
 
 interface UserAttrs {
 	email: string;
@@ -45,9 +45,9 @@ userSchema.pre('save', async function(done) {
 	done();
 });
 
-userSchema.statics.build = (attrs: UserAttrs) => {
+userSchema.static('build', (attrs: UserAttrs) => {
 	return new User(attrs);
-};
+});
 
 const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
 
